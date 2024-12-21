@@ -1,0 +1,29 @@
+server:
+  listen: 80
+
+  upstreams:
+    - id: node1
+      url: http://localhost:8001
+
+    - id: node2
+      url: http://localhost:8002
+
+    - id: node3
+      url: http://localhost:8003
+
+  headers:
+    - key: x-forward-for
+      value: "$id"
+
+    - key: Authorization
+      value: "Bearer hentenabijabi"
+
+  rules:
+    - path: /
+      upstreams:
+        - node1
+        - node2
+
+    - path: /three
+      upstreams:
+        - node3
